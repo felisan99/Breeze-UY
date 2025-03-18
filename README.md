@@ -3,6 +3,8 @@
 ## Project Overview
 Breeze is an advanced IoT weather station designed to measure environmental variables including temperature, humidity, wind speed, wind direction, and atmospheric pressure. The collected data is transmitted to an IoT platform for real-time visualization, allowing users to monitor weather conditions in specific areas. This information is particularly valuable for making informed decisions about outdoor activities such as windsurfing, kitesurfing, and other wind-dependent sports.
 
+![poster_breeze](https://github.com/user-attachments/assets/7a74d986-ba2f-47ad-8755-5b6514a72e79)
+
 ## Introduction
 
 ### General Objective
@@ -66,6 +68,9 @@ If the anemometer had been placed at the top along with the wind vane, the prote
 The incorporation of the solar panel led us to carefully analyze its location to optimize sunlight capture and, consequently, maximize energy generation. To achieve this, we considered the daily path of the sun, strategically orienting the panel so that it receives as much solar radiation as possible. The orientation will also allow us to calibrate the wind vane so that it can correctly report wind direction.
 
 In case of using multiple devices, the location of each panel should be adapted both to the sun's trajectory in its specific position and to the alignment of the wind vane, which we take as a reference.
+
+<img width="621" alt="interacciones" src="https://github.com/user-attachments/assets/2f822dad-13cf-4bdf-a903-4cafd5e30f1c" />
+
 
 ## Solution Details
 
@@ -138,5 +143,7 @@ In the first column, data obtained from an external API is shown. This data is a
 In the second column, data measured directly by the device is visualized. Widgets for historical comparison have also been added, which allow observing the variation of both data sets over time. This facilitates both real-time and historical analysis, allowing evaluation of discrepancies between API data and experimental data.
 
 Additionally, a map was incorporated that shows the location of active Breeze devices along the country's coasts. Each device was manually configured, specifying its latitude and longitude coordinates for visualization on the map. Although we currently only have one functional device, this widget establishes a basis for future developments, allowing that, as more devices are implemented at different points in the country, their respective data can be identified and consulted.
+
+![foto breeze 1](https://github.com/user-attachments/assets/f2e15a8b-f63c-4805-9a1b-478213d6b038)
 
 The link to the dashboard is as follows: http://demo.thingsboard.io/dashboard/1c677ba0-9269-11ef-af67-a38a7671daf5?publicId=3d91b040-9d2a-11ef-af67-a38a7671daf5
