@@ -1,0 +1,71 @@
+---
+layout: page
+title: Plataforma IoT
+nav_order: 6
+permalink: /plataformaIoT/
+---
+
+## Plataforma: Thingsboard
+
+Como plataforma de IoT utilizamos Thingsboard en su version demo. Esta plataforma nos ofrece un conjunto de funcionalidades suficientes para nuestro proyecto. Las funcionalidades mas destacables 
+que nos permite realizar esta plataforma son:
+ - Manejo de variables dinamicas y estaticas.
+ - Envio de alertas por correo.
+ - Creacion de variables compartidas para que sean leidas por los dispositivos.
+ - Visualizacion de los datos sensados (dashboard).
+ - Facil escalabilidad en caso de instalacion de muchos dispositivos.
+
+Una vez que ingresamos a la plataforma, el primer paso fue crear los dispositivos (devices) necesarios para el proyecto. Esta configuración inicial sentó las bases para la implementación de las funcionalidades específicas de cada dispositivo.
+
+Después de configurar los dispositivos, comenzamos a desarrollar las cadenas de reglas, que son responsables de ejecutar toda la lógica asociada. Estas cadenas permiten automatizar y gestionar las operaciones de los dispositivos de manera eficiente.
+
+Entre las principales acciones que se pueden realizar mediante las cadenas de reglas se encuentran la obtención de datos de APIs externas relacionadas con el clima, la lectura y actualización de variables, la ejecución de alarmas, el envío de notificaciones por correo electrónico y los cambios de estado de los dispositivos, como activar el resguardo o pasar al modo de suspensión (sleep-mode).
+
+A continuacion se muestra la cadena de reglas principal del proyecto:
+
+![logicabreeze](/img/imagen-cadena-logicabreeze.png)
+
+Esta cadena de reglas es fundamental para realizar la mayoría de las tareas relacionadas con el manejo y almacenamiento de datos. Si la observamos de izquierda a derecha, podemos ver que la lógica comienza con la llamada a una API externa de clima, que nos permite consultar el pronóstico para una zona específica (en este caso, Montevideo). Los datos obtenidos de la API pasan luego por varios procesos representados por bloques celestes.  
+
+El primer bloque (ubicado en la parte superior) tiene la función de almacenar los datos obtenidos de la API como telemetría en el dispositivo. Esto asegura que la información del clima quede registrada para futuras consultas y análisis.  
+
+El segundo bloque (en el centro) ejecuta la lógica relacionada con el resguardo, determinando si el dispositivo debe entrar, salir o mantenerse en resguardo. Este segmento de la cadena es crucial, ya que está conectado a otra cadena de reglas dedicada a la gestión de alarmas, la cual será explicada más adelante.  
+
+Finalmente, el tercer bloque (ubicado en la parte inferior) se encarga de registrar una variable compartida que indica si es de día o de noche. Este dato es esencial para activar el mecanismo de *sleep-mode*, optimizando el comportamiento del dispositivo según el momento del día.
+
+## Alertas
+
+Decidimos incluir la generación de alertas como una característica clave, ya que consideramos que puede ser muy útil para los usuarios. Esta funcionalidad les permite recibir información importante sobre el estado del dispositivo sin la necesidad de estar monitoreando constantemente el panel de datos.
+
+Para la transmisión de las alertas, elegimos el correo electrónico, ya que es un medio ampliamente utilizado por los usuarios y, además, está integrado en la versión de ThingsBoard que estamos utilizando. Esto simplifica su implementación y asegura una mayor accesibilidad para la mayoría de los usuarios.
+
+En nuestro caso, las alertas se enviarán cada vez que el dispositivo entre en modo de resguardo. Esto permitirá informar a los usuarios cuando las condiciones meteorológicas no sean aptas para la práctica de deportes. Este enfoque mejora significativamente la experiencia del usuario al ofrecerle notificaciones proactivas y relevantes.
+
+La creación de la cadena de reglas necesaria para esta funcionalidad se basó en la documentación oficial de ThingsBoard. A continuación, se detalla el diseño de la cadena de reglas implementada.
+
+![cadenareglas](/img/imagen-cadena-alarmas.png)
+
+Esta cadena de reglas está vinculada a la cadena anterior a través del último bloque, que corresponde a la lógica del resguardo. Gracias a esta integración, se garantiza una transición eficiente entre las distintas funcionalidades del sistema.
+
+La estructura de bloques utilizada asegura que las alertas solo se envíen cuando haya un cambio real en el estado del dispositivo, es decir, únicamente si el estado anterior es diferente al nuevo estado al que se debe transitar. Este enfoque evita que la cadena genere alertas de manera continua, eliminando la posibilidad de enviar correos repetitivos que no aporten información nueva o relevante.
+
+
+![voyresguardo](/img/imagen-alerta-voyaresguardo.png)
+![salgoresguardo](/img/imagen-alerta-salgoderesguardo.png)
+
+## Presentación de los datos : Dashboards
+
+Una vez configurados todos los mecanismos para que los datos ingresaran periódicamente a la plataforma y se almacenaran en la telemetría del dispositivo, se creó un panel de visualización para los usuarios. Este dashboard permite mostrar de manera integrada los datos recolectados por el dispositivo, las predicciones provenientes de la API, las ubicaciones de los dispositivos y otras métricas clave. A continuación, se muestra el diseño final del dashboard implementado para este proyecto.
+
+El dashboard final está organizado en dos columnas de widgets, cada una destinada a distintos conjuntos de datos.
+
+En la primera columna, se muestran los datos obtenidos de una API externa. Estos datos se adquieren a través de varios bloques de código, que se encargan de subirlos a la entidad correspondiente dentro de la plataforma. La inclusión de estos datos reales es valiosa, ya que permite compararlos directamente con los datos registrados por nuestro dispositivo.
+
+En la segunda columna, se visualizan los datos medidos directamente por el dispositivo. También se han añadido widgets de comparación histórica, que permiten observar la variación de ambos conjuntos de datos a lo largo del tiempo. Esto facilita tanto el análisis en tiempo real como el histórico, permitiendo evaluar las discrepancias entre los datos de la API y los datos experimentales.
+
+Adicionalmente, se incorporó un mapa que muestra la ubicación de los dispositivos Breeze activos a lo largo de las costas del país. Cada dispositivo fue configurado manualmente, especificando sus coordenadas de latitud y longitud para su visualización en el mapa. Aunque actualmente solo contamos con un dispositivo funcional, este widget establece una base para futuros desarrollos, permitiendo que, a medida que se implementen más dispositivos en distintos puntos del país, puedan identificarse y consultarse sus datos respectivos.
+
+El link al dashboard es el siguiente: http://demo.thingsboard.io/dashboard/1c677ba0-9269-11ef-af67-a38a7671daf5?publicId=3d91b040-9d2a-11ef-af67-a38a7671daf5
+
+
+
